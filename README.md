@@ -1398,6 +1398,17 @@ Hãy tưởng tượng một trường hợp có hai nhiệm vụ: một nhiệm
 
 
 
+# So Sánh Các Cơ Chế Đồng Bộ Hóa trong FreeRTOS
+
+Bảng dưới đây so sánh các cơ chế đồng bộ hóa cho phép giao tiếp giữa các nhiệm vụ trong FreeRTOS, bao gồm ưu và nhược điểm của mỗi phương pháp:
+
+| Cơ Chế          | Mô Tả | Ưu Điểm | Nhược Điểm |
+|-----------------|-------|---------|------------|
+| **Semaphores**  | Dùng để đồng bộ hóa truy cập tới tài nguyên chia sẻ hoặc để một nhiệm vụ chờ đợi một sự kiện. | - Đơn giản để sử dụng.<br>- Linh hoạt trong việc quản lý tài nguyên và sự kiện. | - Không truyền thông tin ngoài sự kiện "signal".<br>- Có thể gây ra vấn đề ưu tiên nghịch nếu không được sử dụng cẩn thận. |
+| **Mutexes**     | Một dạng semaphore đặc biệt, tối ưu hóa cho việc quản lý quyền truy cập vào tài nguyên. | - Hỗ trợ ưu tiên kế thừa để giảm thiểu vấn đề ưu tiên nghịch.<br>- Rõ ràng cho tài nguyên chia sẻ. | - Chi phí thực thi cao hơn semaphore.<br>- Cần thận trọng để tránh deadlock. |
+| **Event Groups** | Cho phép các nhiệm vụ chờ một tập hợp các sự kiện. | - Linh hoạt trong việc xử lý nhiều sự kiện.<br>- Có thể chờ đợi nhiều điều kiện cùng một lúc. | - Phức tạp hơn khi cài đặt và quản lý.<br>- Sử dụng nhiều tài nguyên hơn so với semaphore hoặc notifications. |
+| **Queues**      | Cung cấp cơ chế gửi và nhận thông điệp giữa các nhiệm vụ hoặc giữa nhiệm vụ và ngắt. | - Có thể truyền dữ liệu lớn giữa các nhiệm vụ.<br>- Hữu ích cho mô hình producer/consumer. | - Quản lý và điều chỉnh kích thước queue có thể phức tạp.<br>- Cần quản lý bộ nhớ cho các item trong queue. |
+| **Notifications** | Gửi thông báo từ một nhiệm vụ đến nhiệm vụ khác hoặc từ ISR đến nhiệm vụ. | - Hiệu quả và nhanh chóng.<br>- Ít tốn tài nguyên hơn so với các cơ chế khác. | - Giới hạn thông tin có thể truyền (chỉ một giá trị).<br>- Không phù hợp cho giao tiếp phức tạp hoặc truyền dữ liệu lớn. |
 
 
 
